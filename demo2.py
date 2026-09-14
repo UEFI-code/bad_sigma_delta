@@ -3,7 +3,7 @@ last_high_bits = 0
 last_equ_energy = 0.0
 error_sum = 0.0
 
-def sigma_delta_step(expected_energy = 0.233):
+def sigma_delta_step(expected_energy = 0.233, debug=False):
     global last_high_bits, last_equ_energy, error_sum
     energy_delta = expected_energy - last_equ_energy
     if energy_delta < 0 and error_sum > 0: # over charge
@@ -17,7 +17,8 @@ def sigma_delta_step(expected_energy = 0.233):
     if this_high_bits < 0: this_high_bits = 0
     if this_high_bits > avail_bits: this_high_bits = avail_bits
     this_equ_energy = this_high_bits / avail_bits
-    print(f"Last equ energy: {last_equ_energy:.3f}, Error sum: {error_sum:.3f}, Energy sigma bits: {energy_sigma_bits}, This high bits: {this_high_bits}, This equ energy: {this_equ_energy:.3f}")
+    if debug:
+        print(f"Last equ energy: {last_equ_energy:.3f}, Error sum: {error_sum:.3f}, Energy sigma bits: {energy_sigma_bits}, This high bits: {this_high_bits}, This equ energy: {this_equ_energy:.3f}")
     last_high_bits = this_high_bits
     last_equ_energy = (last_equ_energy + this_equ_energy) / 2
 
@@ -29,6 +30,6 @@ def get_byte_value():
     return value
 
 if __name__ == "__main__":
-    for _ in range(16):
-        sigma_delta_step(0.233)
+    for _ in range(32):
+        sigma_delta_step(0.233, debug=True)
         print(f"Byte value: {get_byte_value():08b}")
