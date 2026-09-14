@@ -28,6 +28,7 @@ def get_byte_value():
         value |= 1
     return value
 
-for _ in range(16):
-    sigma_delta_step(0.233)
-    print(f"Byte value: {get_byte_value():08b}")
+if __name__ == "__main__":
+    for _ in range(16):
+        sigma_delta_step(0.233)
+        print(f"Byte value: {get_byte_value():08b}")
