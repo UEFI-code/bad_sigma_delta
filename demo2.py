@@ -21,5 +21,13 @@ def sigma_delta_step(expected_energy = 0.233):
     last_high_bits = this_high_bits
     last_equ_energy = (last_equ_energy + this_equ_energy) / 2
 
+def get_byte_value():
+    value = 0
+    for _ in range(last_high_bits):
+        value <<= 1
+        value |= 1
+    return value
+
 for _ in range(16):
     sigma_delta_step(0.233)
+    print(f"Byte value: {get_byte_value():08b}")
